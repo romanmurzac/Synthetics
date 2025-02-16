@@ -2,12 +2,25 @@ import json
 
 
 class ConfigReader:
+    """
+    Read and parse a JSON configuration file.
+    """
 
-    def __init__(self, config_path):
+    def __init__(self, config_path: str) -> None:
+        """
+        Initializes the ConfigReader with the given configuration file path.
+        Args:
+            config_path (str): Path to the JSON configuration file.
+        """
         self.config_file = config_path
 
     def get_config(self):
-        with open(self.config_file, 'r') as f:
+        """
+        Reads and parses the JSON configuration file.
+        Returns:
+            A dictionary containing the parsed configuration.
+        """
+        with open(self.config_file, "r") as f:
             return json.load(f)
 
 
