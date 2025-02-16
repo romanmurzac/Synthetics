@@ -1,0 +1,35 @@
+{
+  "users": {
+    "user_id": {
+      "type": "primary_key"
+    },
+    "age": {
+      "type": "range",
+      "low": 18,
+      "high": 80
+    },
+    "email": {
+      "type": "regex",
+      "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    }
+  },
+  "orders": {
+    "order_id": {
+      "type": "primary_key"
+    },
+    "user_id": {
+      "type": "foreign_key",
+      "referenced_table": "users",
+      "referenced_column": "user_id"
+    },
+    "amount": {
+      "type": "range",
+      "low": 0.01,
+      "high": 10000.00
+    },
+    "status": {
+      "type": "fixed_combinations",
+      "columns": ["status", "orig"]
+    }
+  }
+}
