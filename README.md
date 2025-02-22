@@ -42,7 +42,55 @@ pytest tests/
 ```
 
 ## Usage
-To be added.
+In the `data/input_data` directory upload sample data files. Accepted formats are: CSV, JSON, and Parquet.\
+In the `config.config.json` file define for each table properties for each column that should be restricted.
+
+### Restriction options
+`primary_key` --> define the primary key in the table.\
+`foreign_key` --> define the foreign key in the table. Provide the `reference` table and column.\
+`range` --> define the numeric range that values in the column should fit in.\
+`regex` --> define the regex pattern to be followed by the values in the column.\
+`fixed_combinations` --> define columns that are interdependent.
+
+***Example***
+```json
+{
+  "users": {
+    "user_id": {
+      "type": "primary_key"
+    },
+    "age": {
+      "type": "range",
+      "low": 18,
+      "high": 80
+    },
+    "email": {
+      "type": "regex",
+      "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    }
+  },
+  "orders": {
+    "order_id": {
+      "type": "primary_key"
+    },
+    "user_id": {
+      "type": "foreign_key",
+      "referenced_table": "users",
+      "referenced_column": "user_id"
+    },
+    "amount": {
+      "type": "range",
+      "low": 0.01,
+      "high": 10000.00
+    },
+    "status": {
+      "type": "fixed_combinations",
+      "columns": ["status", "orig"]
+    }
+  }
+}
+
+```
 
 ## File Structure
 ```
